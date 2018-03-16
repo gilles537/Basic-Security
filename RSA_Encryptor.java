@@ -1,10 +1,26 @@
+import java.security.PrivateKey;
+import java.security.PublicKey;
 
-public class RSA_Encryptor implements Encryptor {
+import javax.crypto.Cipher;
 
-	@Override
-	public String encrypt(String message) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
+
+public class RSA_Encryptor {
+	
+    public static byte[] encrypt(PrivateKey privateKey, String message) throws Exception {
+        Cipher cipher = Cipher.getInstance("RSA");  
+        cipher.init(Cipher.ENCRYPT_MODE, privateKey);  
+
+        return cipher.doFinal(message.getBytes());  
+    }
+    
+    public static byte[] decrypt(PublicKey publicKey, byte [] encrypted) throws Exception {
+        Cipher cipher = Cipher.getInstance("RSA");  
+        cipher.init(Cipher.DECRYPT_MODE, publicKey);
+        
+        return cipher.doFinal(encrypted);
+    }
 
 }
