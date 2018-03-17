@@ -3,10 +3,14 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+
+import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 
 public class Gebruiker {
 	private String password;
 	private String gebruikersnaam;
+	private static ArrayList<Gebruiker> gebruikers = new ArrayList<Gebruiker>();
 	
 	public static void GetGebruikers(){
 		try{
