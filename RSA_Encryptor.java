@@ -16,6 +16,13 @@ public class RSA_Encryptor {
         return cipher.doFinal(message.getBytes());  
     }
     
+    public static byte[] encrypt(PublicKey publicKey, String message) throws Exception {
+    	Cipher cipher = Cipher.getInstance("RSA");
+    	cipher.init(Cipher.ENCRYPT_MODE,publicKey);
+    	
+    	return cipher.doFinal(message.getBytes());
+    }
+    
     public static byte[] decrypt(PublicKey publicKey, byte [] encrypted) throws Exception {
         Cipher cipher = Cipher.getInstance("RSA");  
         cipher.init(Cipher.DECRYPT_MODE, publicKey);
@@ -23,4 +30,11 @@ public class RSA_Encryptor {
         return cipher.doFinal(encrypted);
     }
 
+    public static byte[] decrypt(PrivateKey privatekey, byte [] encrypted) throws Exception {
+        Cipher cipher = Cipher.getInstance("RSA");  
+        cipher.init(Cipher.DECRYPT_MODE, privatekey);
+        
+        return cipher.doFinal(encrypted);
+    }
+    
 }
