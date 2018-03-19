@@ -3,12 +3,12 @@ import java.util.Scanner;
 public class mainclass {
 
 	public static void main(String[] args) throws Exception {
-		// TODO Auto-generated method stub
+		// beginscherm aanmelden of registreren
 		String gebruikersnaam;
 		String boodschap;
 		String paswoord;
 		int confirm;
-		Gebruiker testGebruiker;
+		Gebruiker actieveGebruiker;
 		String receiver;
 		GebruikerManager.GetGebruikers();
 
@@ -17,7 +17,7 @@ public class mainclass {
 		System.out.println("log in: 0, register: 1");
 		confirm = Integer.parseInt(scanner.nextLine());
 
-		while (confirm != 0 || confirm != 1) {
+		while (confirm != 0 && confirm != 1) {
 			System.out.println("typ 1 or 0 to proceed");
 			System.out.println("log in: 0, register: 1");
 			confirm = Integer.parseInt(scanner.nextLine());
@@ -27,57 +27,94 @@ public class mainclass {
 		gebruikersnaam = scanner.nextLine();
 		System.out.println("Password");
 		paswoord = scanner.nextLine();
-		testGebruiker = new Gebruiker(gebruikersnaam, paswoord);
+		actieveGebruiker = new Gebruiker(gebruikersnaam, paswoord);
 
-		if (confirm == 1) {
-			while (GebruikerManager.LoginGebruiker(testGebruiker) == false) {
+		if (confirm == 0) {
+			while (GebruikerManager.LoginGebruiker(actieveGebruiker) == false) {
+
 				System.out.println("Username:");
 				gebruikersnaam = scanner.nextLine();
 				System.out.println("Password");
 				paswoord = scanner.nextLine();
-				testGebruiker = new Gebruiker(gebruikersnaam, paswoord);
+				actieveGebruiker = new Gebruiker(gebruikersnaam, paswoord);
 			}
-		} else if (confirm == 0) {
-			while (GebruikerManager.RegisterGebruiker(testGebruiker) == false) {
+		} else if (confirm == 1) {
+			while (GebruikerManager.RegisterGebruiker(actieveGebruiker) == false) {
 				System.out.println("Username:");
 				gebruikersnaam = scanner.nextLine();
 				System.out.println("Password");
 				paswoord = scanner.nextLine();
-				testGebruiker = new Gebruiker(gebruikersnaam, paswoord);
+				actieveGebruiker = new Gebruiker(gebruikersnaam, paswoord);
 			}
-			System.out.println("Succesfully registered " + testGebruiker.getGebruikersnaam());
+
 		}
 
 		System.out.println("insert name of receiver:");
 		System.out.println("type list to get list of receivers");
 		receiver = scanner.nextLine();
 
-		if (receiver.equals("list")) {
-			GebruikerManager.AfdrukkenGebruikers();
+		
+		
+		while (GebruikerManager.checkName(receiver) == false) {
 			System.out.println("insert name of receiver:");
 			receiver = scanner.nextLine();
 		}
+		
+			System.out.println("Type the message you want to send:");
+			boodschap = scanner.nextLine();
 
-		System.out.println("Type the message you want to send:");
-		boodschap = scanner.nextLine();
+			// encrypteren en decrypteren enzo
 
-		// tot hier heb ik alles gedaan
+			new AES_Encryptor();
+			KeyManager keymanager = new KeyManager();
+			AES_Encryptor.encrypt(keymanager.getAESKey(), keymanager.getAESIV(), boodschap);
 
-		new AES_Encryptor();
-		KeyManager keymanager = new KeyManager();
-		AES_Encryptor.encrypt(keymanager.getAESKey(), keymanager.getAESIV(), boodschap);
+			String test = "Dirk";
+			AES_Encryptor encryptor = new AES_Encryptor();
+			KeyManager keymanager1 = new KeyManager();
 
-		String test = "Dirk";
-		AES_Encryptor encryptor = new AES_Encryptor();
-		KeyManager keymanager1 = new KeyManager();
+			// String encryptedTest = encryptor.encrypt(keymanager.getAESKey(),
+			// keymanager.getAESIV(), "Pannekoek");
 
-		// String encryptedTest = encryptor.encrypt(keymanager.getAESKey(),
-		// keymanager.getAESIV(), "Pannekoek");
+			Hasher hasher = new Hasher();
 
-		Hasher hasher = new Hasher();
+			System.out.println(hasher.sha256("ik ben een test hash"));
 
-		System.out.println(hasher.sha256("ik ben een test hash"));
+			// uitloggen of ander bericht sturen
 
-	}
+			System.out.println("Do you want to log out or continue sending messages.");
+			System.out.println("log out:0, continue:1");
+			confirm = Integer.parseInt(scanner.nextLine());
 
+			while (confirm != 0 && confirm != 1) {
+				System.out.println("typ 1 or 0 to proceed");
+				System.out.println("Do you want to log out or continue sending messages.");
+				confirm = Integer.parseInt(scanner.nextLine());
+			}
+
+			while (confirm == 1) {
+				System.out.println("insert name of receiver:");
+
+				System.out.println("type list to get list of receivers");
+				receiver = scanner.nextLine();
+
+				while (GebruikerManager.checkName(receiver) == false) {
+					System.out.println("insert name of receiver:");
+					receiver = scanner.nextLine();
+				}
+				
+					System.out.println("Type the message you want to send:");
+					boodschap = scanner.nextLine();
+				// encrypteren en decrypteren ofzo
+
+				System.out.println("Do you want to log out or continue sending messages.");
+				System.out.println("log out:0, continue:1");
+				confirm = Integer.parseInt(scanner.nextLine());
+			}
+
+			System.out.println(actieveGebruiker.getGebruikersnaam() + " logged out.");
+
+		}
+
+	
 }

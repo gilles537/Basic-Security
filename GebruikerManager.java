@@ -54,8 +54,23 @@ public class GebruikerManager {
 		}
 	}
 
+	public static boolean checkName(String gebruikersnaam) {
+		for (int i = 0; i <= gebruikers.size() - 1; i++) {
+			if (gebruikersnaam.equals(gebruikers.get(i).getGebruikersnaam())) {
+				return true;
+			}else if(gebruikersnaam.equals("list")){
+				AfdrukkenGebruikers();
+				return false;
+			}
+		}
+		System.out.println(gebruikersnaam + " does not exist.");
+		return false;
+		
+
+	}
+
 	public static boolean LoginGebruiker(Gebruiker gebruiker) {
-		for (int i = 0; i <= gebruikers.size(); i++) {
+		for (int i = 0; i <= gebruikers.size() - 1; i++) {
 
 			if (gebruiker.getGebruikersnaam().equals(gebruikers.get(i).getGebruikersnaam())
 					&& gebruiker.getPassword().equals(gebruikers.get(i).getPassword())) {
@@ -69,19 +84,23 @@ public class GebruikerManager {
 	}
 
 	public static boolean RegisterGebruiker(Gebruiker gebruiker) {
-		for (int i = 0; i <= gebruikers.size(); i++) {
-			if ((gebruiker.getGebruikersnaam().equals(gebruikers.get(i).getGebruikersnaam()))) {
+		for (int i = 0; i <= gebruikers.size() - 1; i++) {
+			if ((gebruiker.getGebruikersnaam().equals(gebruikers.get(i).getGebruikersnaam())
+					|| gebruiker.getGebruikersnaam() == "list")) {
 				System.out.println(gebruiker.getGebruikersnaam() + " is already taken.");
 				return false;
 			}
 
 		}
-
+		System.out.println("Succesfully registered " + gebruiker.getGebruikersnaam());
+		gebruikers.add(gebruiker);
 		return true;
 
 	}
 
 	public static void AfdrukkenGebruikers() {
+		System.out.println("------------------");
 		gebruikers.forEach(b -> System.out.println(b.getGebruikersnaam()));
+		System.out.println("------------------");
 	}
 }
