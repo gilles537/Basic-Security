@@ -1,5 +1,7 @@
 import java.util.Scanner;
 
+import com.sun.swing.internal.plaf.basic.resources.basic_ja;
+
 public class mainclass {
 
 	public static void main(String[] args) throws Exception {
@@ -13,7 +15,8 @@ public class mainclass {
 		GebruikerManager.GetGebruikers();
 
 		Scanner scanner = new Scanner(System.in);
-
+// exception waneer het geen 0 of 1 is
+		
 		System.out.println("log in: 0, register: 1");
 		confirm = Integer.parseInt(scanner.nextLine());
 
@@ -54,7 +57,7 @@ public class mainclass {
 		receiver = scanner.nextLine();
 
 		
-		
+		// bij 2de list pakt die deze als username.
 		while (GebruikerManager.checkName(receiver) == false) {
 			System.out.println("insert name of receiver:");
 			receiver = scanner.nextLine();
