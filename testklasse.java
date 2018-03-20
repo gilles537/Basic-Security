@@ -32,12 +32,13 @@ public class testklasse {
         */
         
     	
-    	EncryptionController controller = new EncryptionController();
-    	
     	KeyManager keymanager = new KeyManager();
-    	
-    	controller.sendMessageTo("ik ben een kleine vis", "kobe", keymanager);
-    	controller.openMessage("kobe", keymanager);
+    	IOManager.SaveKeyPair("a", keymanager.getRSAKeyPair(1));
+    	IOManager.SaveKeyPair("b", keymanager.getRSAKeyPair(2));
+    	IOManager.WriteFile("AESKey", keymanager.getAESKey());
+    	IOManager.WriteFile("AESIV", keymanager.getAESIV());
+    	EncryptionController.sendMessageTo("ik ben een kleine vis", "kobe", keymanager,IOManager.LoadKeyPair("a", "RSA"),IOManager.LoadKeyPair("b", "RSA"),IOManager.ReadLineFromFile("AESKey"),IOManager.ReadLineFromFile("AESIV"));
+    	EncryptionController.openMessage(keymanager,IOManager.LoadKeyPair("a", "RSA"),IOManager.LoadKeyPair("b", "RSA"),IOManager.ReadLineFromFile("AESIV"));
     	
     	
     	/*

@@ -29,6 +29,13 @@ public class KeyManager {
         return keyPairGenerator.genKeyPair();
     }
     
+    public KeyPair getRSAKeyPair(int gebruiker) {
+    	if (gebruiker == 1) 
+    		return RSAUser1;
+    	else
+    		return RSAUser2;
+    }
+    
     public PublicKey getRSAKeyPub(int gebruiker) {
     	if (gebruiker == 1) 
     		return RSAUser1.getPublic();
