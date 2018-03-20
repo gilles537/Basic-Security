@@ -37,8 +37,8 @@ public class testklasse {
     	IOManager.SaveKeyPair("b", keymanager.getRSAKeyPair(2));
     	IOManager.WriteFile("AESKey", keymanager.getAESKey());
     	IOManager.WriteFile("AESIV", keymanager.getAESIV());
-    	EncryptionController.sendMessageTo("ik ben een kleine vis", "kobe", keymanager,IOManager.LoadKeyPair("a", "RSA"),IOManager.LoadKeyPair("b", "RSA"),IOManager.ReadLineFromFile("AESKey"),IOManager.ReadLineFromFile("AESIV"));
-    	EncryptionController.openMessage(keymanager,IOManager.LoadKeyPair("a", "RSA"),IOManager.LoadKeyPair("b", "RSA"),IOManager.ReadLineFromFile("AESIV"));
+    	EncryptionController.sendMessageTo("ik ben een kleine vis", "kobe",IOManager.LoadKeyPair("a", "RSA"),IOManager.LoadKeyPair("b", "RSA"),IOManager.ReadLineFromFile("AESKey"),IOManager.ReadLineFromFile("AESIV"));
+    	EncryptionController.openMessage(IOManager.LoadKeyPair("a", "RSA"),IOManager.LoadKeyPair("b", "RSA"),IOManager.ReadLineFromFile("AESIV"));
     	
     	
     	/*
