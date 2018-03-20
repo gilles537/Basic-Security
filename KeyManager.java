@@ -40,7 +40,7 @@ public class KeyManager {
     	if (gebruiker == 1)
     		return RSAUser1.getPrivate();
     	else
-    		return RSAUser1.getPrivate();
+    		return RSAUser2.getPrivate();
     }
 	
 	private String getRandomHexString(int numchars){
