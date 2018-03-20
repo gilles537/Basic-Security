@@ -39,5 +39,10 @@ public class testklasse {
     	controller.sendMessageTo("ik ben een kleine vis", "kobe", keymanager);
     	controller.openMessage("kobe", keymanager);
     	
+    	
+    	/*
+    	IOManager.WriteFile("testfile", "ik ben een kleine vis");
+    	System.out.println(IOManager.ReadLineFromFile("testfile"));
+    	*/
     }
 }
