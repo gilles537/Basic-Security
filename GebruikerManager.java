@@ -41,6 +41,7 @@ public class GebruikerManager {
 			gebruikers.forEach(b -> {
 				try {
 					writer.write(b.toString());
+					writer.write("\r\n");
 				} catch (IOException e) {
 					System.out.println(e.getMessage());
 				}
@@ -94,6 +95,7 @@ public class GebruikerManager {
 		}
 		System.out.println("Succesfully registered " + gebruiker.getGebruikersnaam());
 		gebruikers.add(gebruiker);
+		SaveGebruikers();
 		return true;
 
 	}

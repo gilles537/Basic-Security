@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-import com.sun.swing.internal.plaf.basic.resources.basic_ja;
+
 
 public class mainclass {
 
@@ -11,7 +11,7 @@ public class mainclass {
 		String paswoord;
 		int confirm;
 		Gebruiker actieveGebruiker;
-		String receiver;
+		String reciever;
 		GebruikerManager.GetGebruikers();
 
 		Scanner scanner = new Scanner(System.in);
@@ -52,37 +52,31 @@ public class mainclass {
 
 		}
 
+		if (actieveGebruiker.getGebruikersnaam().equals(IOManager.ReadLineFromFile("reciever"))) {
+			System.out.println("You have a message: ");
+	    	EncryptionController.openMessage(IOManager.LoadKeyPair("a", "RSA"),IOManager.LoadKeyPair("b", "RSA"),IOManager.ReadLineFromFile("AESIV"));
+		}
+		
 		System.out.println("insert name of receiver:");
 		System.out.println("type list to get list of receivers");
-		receiver = scanner.nextLine();
+		reciever = scanner.nextLine();
 
 		
 		// bij 2de list pakt die deze als username.
-		while (GebruikerManager.checkName(receiver) == false) {
+		while (GebruikerManager.checkName(reciever) == false) {
 			System.out.println("insert name of receiver:");
-			receiver = scanner.nextLine();
+			reciever = scanner.nextLine();
 		}
 		
 			System.out.println("Type the message you want to send:");
 			boodschap = scanner.nextLine();
 
 			// encrypteren en decrypteren enzo
+			
+			setupFileForEncryption();
+	    	EncryptionController.sendMessageTo(boodschap,actieveGebruiker.getGebruikersnaam(), reciever,IOManager.LoadKeyPair("a", "RSA"),IOManager.LoadKeyPair("b", "RSA"),IOManager.ReadLineFromFile("AESKey"),IOManager.ReadLineFromFile("AESIV"));
 
-			new AES_Encryptor();
-			KeyManager keymanager = new KeyManager();
-			AES_Encryptor.encrypt(keymanager.getAESKey(), keymanager.getAESIV(), boodschap);
-
-			String test = "Dirk";
-			AES_Encryptor encryptor = new AES_Encryptor();
-			KeyManager keymanager1 = new KeyManager();
-
-			// String encryptedTest = encryptor.encrypt(keymanager.getAESKey(),
-			// keymanager.getAESIV(), "Pannekoek");
-
-			Hasher hasher = new Hasher();
-
-			System.out.println(hasher.sha256("ik ben een test hash"));
-
+	    	
 			// uitloggen of ander bericht sturen
 
 			System.out.println("Do you want to log out or continue sending messages.");
@@ -99,11 +93,11 @@ public class mainclass {
 				System.out.println("insert name of receiver:");
 
 				System.out.println("type list to get list of receivers");
-				receiver = scanner.nextLine();
+				reciever = scanner.nextLine();
 
-				while (GebruikerManager.checkName(receiver) == false) {
+				while (GebruikerManager.checkName(reciever) == false) {
 					System.out.println("insert name of receiver:");
-					receiver = scanner.nextLine();
+					reciever = scanner.nextLine();
 				}
 				
 					System.out.println("Type the message you want to send:");
@@ -118,6 +112,14 @@ public class mainclass {
 			System.out.println(actieveGebruiker.getGebruikersnaam() + " logged out.");
 
 		}
+	
+	private static void setupFileForEncryption() throws Exception {
+    	KeyManager keymanager = new KeyManager();
+    	IOManager.SaveKeyPair("a", keymanager.getRSAKeyPair(1));
+    	IOManager.SaveKeyPair("b", keymanager.getRSAKeyPair(2));
+    	IOManager.WriteFile("AESKey", keymanager.getAESKey());
+    	IOManager.WriteFile("AESIV", keymanager.getAESIV());
+	}
 
 	
 }
