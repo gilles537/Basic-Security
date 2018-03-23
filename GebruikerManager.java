@@ -87,7 +87,7 @@ public class GebruikerManager {
 	public static boolean RegisterGebruiker(Gebruiker gebruiker) {
 		for (int i = 0; i <= gebruikers.size() - 1; i++) {
 			if ((gebruiker.getGebruikersnaam().equals(gebruikers.get(i).getGebruikersnaam())
-					|| gebruiker.getGebruikersnaam() == "list")) {
+					|| gebruiker.getGebruikersnaam().equals("list"))) {
 				System.out.println(gebruiker.getGebruikersnaam() + " is already taken.");
 				return false;
 			}

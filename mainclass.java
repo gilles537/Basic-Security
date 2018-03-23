@@ -9,7 +9,7 @@ public class mainclass {
 		String gebruikersnaam;
 		String boodschap;
 		String paswoord;
-		int confirm;
+		int confirm = 5;
 		Gebruiker actieveGebruiker;
 		String reciever;
 		GebruikerManager.GetGebruikers();
@@ -18,12 +18,20 @@ public class mainclass {
 // exception waneer het geen 0 of 1 is
 		
 		System.out.println("log in: 0, register: 1");
-		confirm = Integer.parseInt(scanner.nextLine());
+		try {
+			confirm = Integer.parseInt(scanner.nextLine());
+		} catch (Exception e) {
+			System.out.println("Please enter a number. Got error " + e.getMessage());
+		}
 
 		while (confirm != 0 && confirm != 1) {
 			System.out.println("typ 1 or 0 to proceed");
 			System.out.println("log in: 0, register: 1");
-			confirm = Integer.parseInt(scanner.nextLine());
+			try {
+				confirm = Integer.parseInt(scanner.nextLine());
+			} catch (Exception e) {
+				System.out.println("Please enter a number. Got error " + e.getMessage());
+			}
 		}
 
 		System.out.println("Username:");
